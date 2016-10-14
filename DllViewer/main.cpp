@@ -1,11 +1,7 @@
 #include "stdafx.h"
-#include "dllviewer.h"
-#include <QtWidgets/QApplication>
+#include "application.hpp"
 
 int main(int argc, char *argv[])
 {
-	QApplication a(argc, argv);
-	DllViewer w;
-	w.show();
-	return a.exec();
+	DllViewerApp::Application a(argc, argv);
 }

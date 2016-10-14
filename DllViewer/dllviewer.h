@@ -1,19 +1,18 @@
-#ifndef DLLVIEWER_H
-#define DLLVIEWER_H
+#pragma once
 
 #include <QtWidgets/QMainWindow>
 #include "ui_dllviewer.h"
 
-class DllViewer : public QMainWindow
+namespace DllViewerApp
 {
-	Q_OBJECT
+	class DllViewer : public QMainWindow
+	{
+		Q_OBJECT
 
-public:
-	DllViewer(QWidget *parent = 0);
-	~DllViewer();
+	public:
+		DllViewer(QWidget *parent = 0);
 
-private:
-	Ui::DllViewerClass ui;
-};
-
-#endif // DLLVIEWER_H
+	private:
+		Ui::DllViewerClass ui;
+	};
+}

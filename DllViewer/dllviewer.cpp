@@ -1,13 +1,13 @@
 #include "stdafx.h"
 #include "dllviewer.h"
 
-DllViewer::DllViewer(QWidget *parent)
-	: QMainWindow(parent)
+namespace DllViewerApp
 {
-	ui.setupUi(this);
-}
 
-DllViewer::~DllViewer()
-{
+	DllViewer::DllViewer(QWidget *parent)
+		: QMainWindow(parent)
+	{
+		ui.setupUi(this);
+	}
 
 }
