@@ -18,9 +18,9 @@
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMainWindow>
-#include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
+#include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QSplitter>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QTreeView>
@@ -35,19 +35,18 @@ public:
     QAction *actionTerminate_process;
     QAction *actionStart_new_process;
     QWidget *centralWidget;
-    QVBoxLayout *verticalLayout_2;
     QVBoxLayout *verticalLayout;
     QHBoxLayout *horizontalLayout_2;
     QLabel *label;
+    QSpacerItem *horizontalSpacer_2;
     QLineEdit *searchLineEdit;
-    QHBoxLayout *horizontalLayout;
-    QPushButton *terminateButton;
-    QPushButton *startProcessButton;
     QSplitter *splitter;
     QTreeView *processView;
     QTreeView *dllsView;
+    QHBoxLayout *horizontalLayout;
+    QSpacerItem *horizontalSpacer;
+    QPushButton *terminateButton;
     QMenuBar *menuBar;
-    QMenu *menuActions;
     QStatusBar *statusBar;
 
     void setupUi(QMainWindow *DllViewerClass)
@@ -70,12 +69,9 @@ public:
         actionStart_new_process->setIcon(icon2);
         centralWidget = new QWidget(DllViewerClass);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
-        verticalLayout_2 = new QVBoxLayout(centralWidget);
-        verticalLayout_2->setSpacing(6);
-        verticalLayout_2->setContentsMargins(11, 11, 11, 11);
-        verticalLayout_2->setObjectName(QStringLiteral("verticalLayout_2"));
-        verticalLayout = new QVBoxLayout();
+        verticalLayout = new QVBoxLayout(centralWidget);
         verticalLayout->setSpacing(6);
+        verticalLayout->setContentsMargins(11, 11, 11, 11);
         verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
         horizontalLayout_2 = new QHBoxLayout();
         horizontalLayout_2->setSpacing(6);
@@ -85,6 +81,10 @@ public:
 
         horizontalLayout_2->addWidget(label);
 
+        horizontalSpacer_2 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        horizontalLayout_2->addItem(horizontalSpacer_2);
+
         searchLineEdit = new QLineEdit(centralWidget);
         searchLineEdit->setObjectName(QStringLiteral("searchLineEdit"));
 
@@ -93,28 +93,9 @@ public:
 
         verticalLayout->addLayout(horizontalLayout_2);
 
-        horizontalLayout = new QHBoxLayout();
-        horizontalLayout->setSpacing(6);
-        horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
-        terminateButton = new QPushButton(centralWidget);
-        terminateButton->setObjectName(QStringLiteral("terminateButton"));
-
-        horizontalLayout->addWidget(terminateButton);
-
-        startProcessButton = new QPushButton(centralWidget);
-        startProcessButton->setObjectName(QStringLiteral("startProcessButton"));
-
-        horizontalLayout->addWidget(startProcessButton);
-
-
-        verticalLayout->addLayout(horizontalLayout);
-
-
-        verticalLayout_2->addLayout(verticalLayout);
-
         splitter = new QSplitter(centralWidget);
         splitter->setObjectName(QStringLiteral("splitter"));
-        splitter->setOrientation(Qt::Vertical);
+        splitter->setOrientation(Qt::Horizontal);
         processView = new QTreeView(splitter);
         processView->setObjectName(QStringLiteral("processView"));
         splitter->addWidget(processView);
@@ -122,22 +103,31 @@ public:
         dllsView->setObjectName(QStringLiteral("dllsView"));
         splitter->addWidget(dllsView);
 
-        verticalLayout_2->addWidget(splitter);
+        verticalLayout->addWidget(splitter);
+
+        horizontalLayout = new QHBoxLayout();
+        horizontalLayout->setSpacing(6);
+        horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
+        horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        horizontalLayout->addItem(horizontalSpacer);
+
+        terminateButton = new QPushButton(centralWidget);
+        terminateButton->setObjectName(QStringLiteral("terminateButton"));
+
+        horizontalLayout->addWidget(terminateButton);
+
+
+        verticalLayout->addLayout(horizontalLayout);
 
         DllViewerClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(DllViewerClass);
         menuBar->setObjectName(QStringLiteral("menuBar"));
         menuBar->setGeometry(QRect(0, 0, 1013, 21));
-        menuActions = new QMenu(menuBar);
-        menuActions->setObjectName(QStringLiteral("menuActions"));
         DllViewerClass->setMenuBar(menuBar);
         statusBar = new QStatusBar(DllViewerClass);
         statusBar->setObjectName(QStringLiteral("statusBar"));
         DllViewerClass->setStatusBar(statusBar);
-
-        menuBar->addAction(menuActions->menuAction());
-        menuActions->addAction(actionTerminate_process);
-        menuActions->addAction(actionStart_new_process);
 
         retranslateUi(DllViewerClass);
 
@@ -154,8 +144,6 @@ public:
         actionStart_new_process->setText(QApplication::translate("DllViewerClass", "Start new process", 0));
         label->setText(QApplication::translate("DllViewerClass", "Type in pid or process name for search:", 0));
         terminateButton->setText(QApplication::translate("DllViewerClass", "Terminate selected process", 0));
-        startProcessButton->setText(QApplication::translate("DllViewerClass", "Start process", 0));
-        menuActions->setTitle(QApplication::translate("DllViewerClass", "Actions", 0));
     } // retranslateUi
 
 };

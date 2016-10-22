@@ -21,11 +21,6 @@ namespace DllViewerApp
 			WHERE_CRASH_INFO
 		);
 
-		Common::verifySignalSlotConnection(
-			connect(ui.startProcessButton, SIGNAL(clicked()), this, SIGNAL(signal_StartProcessButtonClicked())),
-			WHERE_CRASH_INFO
-		);
-
 		ui.processView->setAlternatingRowColors(true);
 		ui.processView->setModel(m_processSnapModel);
 
