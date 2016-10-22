@@ -1,9 +1,13 @@
 #pragma once
 
+#include "applicationbaseexceptions.hpp"
 #include <windows.h>
 
 namespace DllViewerApp
 {
+	class ApplicationControllerException : public AppExceptions::ApplicationRunTimeException
+	{};
+
 	class ApplicationController
 	{
 	public:

@@ -18,28 +18,4 @@ namespace Common
 	void verifySignalSlotConnection(QMetaObject::Connection connectionObject, int lineNumber, std::string const& fromCall = "");
 	bool isOnlyDigits(QString const& str);
 	void showMessageBox(QString const& title, QString const& text);
-
-	class ApplicationRunTimeException : public std::runtime_error
-	{
-	public:
-		ApplicationRunTimeException(std::string const& errorMessage)
-			: std::runtime_error(errorMessage)
-		{}
-
-		ApplicationRunTimeException(char const* errorMessage)
-			: std::runtime_error(errorMessage)
-		{}
-	};
-
-	class SignalSlotBadConnection : public ApplicationRunTimeException
-	{
-	public:
-		SignalSlotBadConnection(std::string const& errorMessage)
-			: ApplicationRunTimeException(errorMessage)
-		{}
-
-		SignalSlotBadConnection(char const* errorMessage)
-			: ApplicationRunTimeException(errorMessage)
-		{}
-	};
 }

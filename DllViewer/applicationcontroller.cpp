@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "common/common.hpp"
 #include "applicationcontroller.hpp"
+#include "applicationbaseexceptions.hpp"
 #include <cassert>
 
 namespace DllViewerApp
@@ -21,7 +22,7 @@ namespace DllViewerApp
 
 		if (hTerminatingProcess == NULL)
 		{
-			throw Common::ApplicationRunTimeException("Cannot open the specified process. Error Access denied.");
+			throw AppExceptions::ApplicationRunTimeException("Cannot open the specified process. Error Access denied.");
 		}
 
 		::TerminateProcess(hTerminatingProcess, 0);

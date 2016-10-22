@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "common.hpp"
+#include "applicationbaseexceptions.hpp"
 #include <memory>
 #include <cstring>
 #include <windows.h>
@@ -42,7 +43,7 @@ namespace Common
 				resultFromCall += "Line: " + std::to_string(lineNumber);
 			}
 
-			throw SignalSlotBadConnection{ std::string{ "Bad signal/slot connection.\n\n" } +resultFromCall };
+			throw AppExceptions::SignalSlotBadConnection{ std::string{ "Bad signal/slot connection.\n\n" } +resultFromCall };
 		}
 	}
 

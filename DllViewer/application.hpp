@@ -14,7 +14,6 @@ namespace DllViewerApp
 
 	public:
 		Application(int argc, char *argv[]);
-		~Application();
 
 	private slots:
 		void slot_TerminateProcess(DWORD pid);

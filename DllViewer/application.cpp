@@ -2,6 +2,7 @@
 #include "application.hpp"
 #include "common/common.hpp"
 #include "common/servicelocator.hpp"
+#include "applicationbaseexceptions.hpp"
 #include <cassert>
 #include <QObject>
 
@@ -30,20 +31,10 @@ namespace DllViewerApp
 			);
 
 			m_mainFrame->show();
-		}
-		catch (std::exception const& e)
-		{
-			Common::showMessageBox("Exception", e.what());
-		}
-	}
 
-	Application::~Application()
-	{
-		try
-		{
 			m_app.exec();
 		}
-		catch (std::exception const& e)
+		catch (AppExceptions::ApplicationRunTimeException const& e)
 		{
 			Common::showMessageBox("Exception", e.what());
 		}

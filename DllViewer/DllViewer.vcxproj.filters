@@ -112,6 +112,9 @@
     <ClInclude Include="common\stringfeatures.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="applicationbaseexceptions.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="dllviewer.h">
@@ -138,5 +141,8 @@
     <CustomBuild Include="applicationcontroller.hpp">
       <Filter>Header Files</Filter>
     </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>
