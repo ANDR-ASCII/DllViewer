@@ -39,10 +39,10 @@ namespace DllViewerApp
 		TOKEN_PRIVILEGES tp;
 		LUID luid;
 
-		BOOL bResult = ::LookupPrivilegeValue(nullptr, SE_DEBUG_NAME, &luid);
-		assert(bResult);
+		BOOL bLookupResult = ::LookupPrivilegeValue(nullptr, SE_DEBUG_NAME, &luid);
+		assert(bLookupResult);
 
-		if (!bResult)
+		if (!bLookupResult)
 		{
 			return;
 		}
@@ -54,9 +54,10 @@ namespace DllViewerApp
 
 		tp.Privileges[0].Attributes = enableStatus;
 
-		assert(::AdjustTokenPrivileges(hThisProcessToken, FALSE, &tp, sizeof(TOKEN_PRIVILEGES), nullptr, nullptr));
+		BOOL bAdjustResult = ::AdjustTokenPrivileges(hThisProcessToken, FALSE, &tp, sizeof(TOKEN_PRIVILEGES), nullptr, nullptr);
+		assert(bAdjustResult);
 
-		if (GetLastError() == ERROR_NOT_ALL_ASSIGNED)
+		if (!bAdjustResult || GetLastError() == ERROR_NOT_ALL_ASSIGNED)
 		{
 			return;
 		}
