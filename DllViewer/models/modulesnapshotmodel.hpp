@@ -35,12 +35,8 @@ namespace DllViewerApp
 
 		enum FieldType
 		{
-			Name
+			  Name
 			, Path
-			, PID
-			, ModuleID
-			, GlobalUsageCounter
-			, ModuleUsageCounter
 			, ModuleBaseAddress
 			, ModuleBaseSize
 		};
@@ -62,7 +58,7 @@ namespace DllViewerApp
 		// updates the containing snapshot
 		virtual void update(DWORD pid = 0) override;
 
-		private slots:
+	private slots:
 		void timedUpdater();
 
 	private:

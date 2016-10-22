@@ -21,7 +21,7 @@ namespace DllViewerApp
 		update();
 
 		Common::verifySignalSlotConnection(
-			connect(m_timer.get(), SIGNAL(timeout()), this, SLOT(timedUpdater())),
+			connect(m_timer, SIGNAL(timeout()), this, SLOT(timedUpdater())),
 			WHERE_CRASH_INFO
 		);
 
@@ -45,11 +45,15 @@ namespace DllViewerApp
 
 	int ProcessSnapshotModel::rowCount(const QModelIndex & parent) const
 	{
-		return m_storage.size();
+		Q_UNUSED(parent);
+
+		return (int)m_storage.size();
 	}
 
 	int ProcessSnapshotModel::columnCount(const QModelIndex & parent) const
 	{
+		Q_UNUSED(parent);
+
 		return headerLabelsSize(Qt::Horizontal);
 	}
 
@@ -110,9 +114,9 @@ namespace DllViewerApp
 
 		for (size_type i = 0, sz = m_storage.size(); i < sz; ++i)
 		{
-			if (m_storage[i].processID == pid)
+			if (m_storage[i].processID == static_cast<DWORD>(pid))
 			{
-				return QAbstractTableModel::createIndex(i, 1, this);
+				return QAbstractTableModel::createIndex(static_cast<int>(i), 1, this);
 			}
 		}
 
@@ -127,7 +131,7 @@ namespace DllViewerApp
 		{
 			if (m_storage[i].processName == str.toStdWString())
 			{
-				return QAbstractTableModel::createIndex(i, 0, this);
+				return QAbstractTableModel::createIndex(static_cast<int>(i), 0, this);
 			}
 		}
 

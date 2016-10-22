@@ -5,21 +5,16 @@
 #include <cassert>
 #include <QAbstractTableModel>
 
-class SnapshotException : std::runtime_error
+class SnapshotException : public std::runtime_error
 {
 public:
 	SnapshotException(std::string const& errorMessage)
 		: std::runtime_error{ errorMessage }
 	{}
 
-#if __cplusplus >= CPP_11_MACRO_VALUE
-
 	SnapshotException(char const* errorMessage)
 		: std::runtime_error{ errorMessage }
 	{}
-
-#endif
-
 };
 
 class AbstractSnapshotModel : public QAbstractTableModel
@@ -70,7 +65,7 @@ protected:
 		emit headerDataChanged(Qt::Vertical, 0, headerLabels.size());
 	}
 
-	std::size_t headerLabelsSize(int role) const
+	int headerLabelsSize(int role) const
 	{
 		assert(role == Qt::Vertical || role == Qt::Horizontal);
 

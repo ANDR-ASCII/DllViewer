@@ -17,6 +17,9 @@ namespace Common
 {
 	std::string wcharToString(wchar_t const* wideString);
 	QString wcharToQString(wchar_t const* wideString);
+	void verifySignalSlotConnection(QMetaObject::Connection connectionObject, int lineNumber, std::string const& fromCall = "");
+	bool isOnlyDigits(QString const& str);
+	void showMessageBox(QString const& title, QString const& text);
 
 	class ApplicationRunTimeException : public std::runtime_error
 	{
@@ -25,14 +28,9 @@ namespace Common
 			: std::runtime_error(errorMessage)
 		{}
 
-#if __cplusplus >= CPP_11_MACRO_VALUE
-
 		ApplicationRunTimeException(char const* errorMessage)
 			: std::runtime_error(errorMessage)
 		{}
-
-#endif
-
 	};
 
 	class SignalSlotBadConnection : public ApplicationRunTimeException
@@ -42,43 +40,8 @@ namespace Common
 			: ApplicationRunTimeException(errorMessage)
 		{}
 
-#if __cplusplus >= CPP_11_MACRO_VALUE
-
 		SignalSlotBadConnection(char const* errorMessage)
 			: ApplicationRunTimeException(errorMessage)
 		{}
-
-#endif
-
 	};
-
-	inline void verifySignalSlotConnection(QMetaObject::Connection connectionObject, int lineNumber, std::string const& fromCall = "")
-	{
-		if (!connectionObject)
-		{
-			std::string resultFromCall;
-
-			if (fromCall.size())
-			{
-				resultFromCall = "From: " + fromCall + "\n";
-				resultFromCall += "Line: " + std::to_string(lineNumber);
-			}
-
-			throw SignalSlotBadConnection{ std::string{ "Bad signal/slot connection.\n\n" } + resultFromCall };
-		}
-	}
-
-	inline bool isOnlyDigits(QString const& str)
-	{
-		for (std::size_t i = 0, sz = str.size(); i < sz; ++i)
-		{
-			if (!std::isdigit(str.toStdString()[i]))
-			{
-				return false;
-			}
-		}
-
-		return true;
-	}
-
 }

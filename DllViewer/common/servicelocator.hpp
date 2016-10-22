@@ -3,7 +3,7 @@
 #include <utility>
 #include <string>
 #include <memory>
-#include <map>
+#include <unordered_map>
 
 namespace Common
 {
@@ -41,9 +41,8 @@ namespace Common
 
 			std::pair<void*, void(*)(void*)> serviceInfo = findIterator->second;
 
-			auto deleter = serviceInfo.second;
-
-			void* service = serviceInfo.first;
+			void(*deleter)(void*) = std::get<1>(serviceInfo);
+			void* service = std::get<0>(serviceInfo);
 
 			deleter(service);
 
@@ -59,8 +58,8 @@ namespace Common
 		{
 			for (auto item : m_services)
 			{
-				auto deleter = item.second.second;
-				void* service = item.second.first;
+				void(*deleter)(void*) = std::get<1>(std::get<1>(item));
+				void* service = std::get<0>(std::get<1>(item));
 
 				deleter(service);
 			}
@@ -82,9 +81,7 @@ namespace Common
 			}
 		};
 
-		friend struct ServiceLocatorDeleter;
-
 	private:
-		std::map<std::string, std::pair<void*, void(*)(void*)>> m_services;
+		std::unordered_map<std::string, std::pair<void*, void(*)(void*)>> m_services;
 	};
 }

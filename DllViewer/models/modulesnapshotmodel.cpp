@@ -8,7 +8,7 @@ namespace DllViewerApp
 
 	ModuleSnapshotModel::ModuleSnapshotModel(QObject * parent, DWORD pid)
 		: AbstractSnapshotModel(parent)
-		, m_timer(::new QTimer(this))
+		, m_timer(new QTimer(this))
 		, m_pid(pid)
 	{
 		QStringList headerLabels;
@@ -16,10 +16,6 @@ namespace DllViewerApp
 		headerLabels
 			<< "Module name"
 			<< "Path"
-			<< "PID"
-			<< "Module ID"
-			<< "Global usage counter"
-			<< "Module usage counter"
 			<< "Base address"
 			<< "Base size";
 
@@ -36,11 +32,15 @@ namespace DllViewerApp
 
 	int ModuleSnapshotModel::rowCount(const QModelIndex& parent) const
 	{
-		return m_storage.size();
+		Q_UNUSED(parent);
+
+		return (int)m_storage.size();
 	}
 
 	int ModuleSnapshotModel::columnCount(const QModelIndex& parent) const
 	{
+		Q_UNUSED(parent);
+
 		return headerLabelsSize(Qt::Horizontal);
 	}
 
@@ -66,8 +66,8 @@ namespace DllViewerApp
 		check(hSnapshot != INVALID_HANDLE_VALUE,
 			"You don't have permissions for open this process");
 
-		check(GetLastError() == ERROR_ACCESS_DENIED, 
-			"");
+		check(GetLastError() != ERROR_ACCESS_DENIED, 
+			"Error access denied");
 
 		m_pid = pid;
 
@@ -102,18 +102,6 @@ namespace DllViewerApp
 
 		case FieldType::Path:
 			return Common::wcharToQString(m_storage[index.row()].path.c_str());
-
-		case FieldType::PID:
-			return static_cast<int>(m_storage[index.row()].processID);
-
-		case FieldType::ModuleID:
-			return static_cast<int>(m_storage[index.row()].moduleID);
-
-		case FieldType::GlobalUsageCounter:
-			return static_cast<int>(m_storage[index.row()].globalUsageCounter);
-
-		case FieldType::ModuleUsageCounter:
-			return static_cast<int>(m_storage[index.row()].moduleUsageCounter);
 
 		case FieldType::ModuleBaseAddress:
 		{

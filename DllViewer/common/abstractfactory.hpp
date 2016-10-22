@@ -1,5 +1,4 @@
-#ifndef ABSTRACT_FACTORY_HPP
-#define ABSTRACT_FACTORY_HPP
+#pragma once
 
 #include <map>
 
@@ -56,5 +55,3 @@ namespace BaseApi
 		std::map<Key, std::shared_ptr<ICreator<T>>> m_storage;
 	};
 }
-
-#endif

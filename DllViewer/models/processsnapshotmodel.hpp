@@ -46,22 +46,19 @@ namespace DllViewerApp
 		ProcessSnapshotModel(QObject * parent = Q_NULLPTR);
 		~ProcessSnapshotModel() = default;
 
+		void update(DWORD = 0);
+
 		QModelIndex search(QString const& str, SearchType type);
 		bool existsItemOf(QModelIndex const& index) const;
 		QVariant getValue(QModelIndex const& index) const;
 		QVariant getValue(int row, int column) const;
 
-		// QAbstractTableModel implementation
+		// QAbstractItemModel implementation
 		virtual int rowCount(const QModelIndex &parent = QModelIndex{}) const override;
 		virtual int columnCount(const QModelIndex &parent = QModelIndex{}) const override;
 		virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
-		// AbstractSnapshotModel implementation
-
-		// updates the containing snapshot
-		virtual void update(DWORD pid = 0) override;
-
-		private slots:
+	private slots:
 		void timedUpdater();
 
 	private:
@@ -78,7 +75,7 @@ namespace DllViewerApp
 
 	private:
 		std::vector<ProcessInfo> m_storage;
-		std::shared_ptr<QTimer> m_timer;
+		QTimer* m_timer;
 	};
 
 }

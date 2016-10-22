@@ -3,69 +3,48 @@
 #include "common/common.hpp"
 #include "common/servicelocator.hpp"
 #include <cassert>
+#include <QObject>
 
 namespace DllViewerApp
 {
 	using namespace Common;
 
 	Application::Application(int argc, char *argv[])
-		: m_app(argc, argv)
-		, m_seDebugNameTurnedOn(false)
+		: m_app{ argc, argv }
+		, m_appController(new ApplicationController)
 	{
-		m_seDebugNameTurnedOn = setSeDebugNamePrivilege(true);
+		m_appController->setSeDebugName(true);
 
-		ServiceLocator* serviceLocator = ServiceLocator::instance();
+		if (m_appController->seDebugName() == false)
+		{
+			showMessageBox("Advice", "This program should be started behalf administrator");
+		}
 
 		try
 		{
 			m_mainFrame.reset(new DllViewer);
+			
+			verifySignalSlotConnection(
+				connect(m_mainFrame.get(), SIGNAL(terminateButtonClicked()), this, SLOT(slot_TerminateProcess())),
+				WHERE_CRASH_INFO
+			);
+
 			m_mainFrame->show();
 		}
 		catch (std::exception const& e)
 		{
-
+			Common::showMessageBox("Exception", e.what());
 		}
 	}
 
 	Application::~Application()
 	{
-		if (m_seDebugNameTurnedOn)
-		{
-			setSeDebugNamePrivilege(false);
-		}
-
 		m_app.exec();
 	}
 
-	bool Application::setSeDebugNamePrivilege(bool flag)
+	void Application::slot_TerminateProcess(DWORD pid)
 	{
-		HANDLE hThisProcess = ::OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION, FALSE, ::GetCurrentProcessId());
-		assert(hThisProcess != nullptr);
-
-		HANDLE hThisProcessToken = 0;
-		::OpenProcessToken(hThisProcess, TOKEN_ADJUST_PRIVILEGES, &hThisProcessToken);
-		assert(hThisProcess != 0);
-
-		TOKEN_PRIVILEGES tp;
-		LUID luid;
-
-		assert(::LookupPrivilegeValue(nullptr, SE_DEBUG_NAME, &luid));
-
-		tp.PrivilegeCount = 1;
-		tp.Privileges[0].Luid = luid;
-
-		DWORD enableStatus = flag ? SE_PRIVILEGE_ENABLED : SE_PRIVILEGE_REMOVED;
-
-		tp.Privileges[0].Attributes = enableStatus;
-
-		assert(::AdjustTokenPrivileges(hThisProcessToken, FALSE, &tp, sizeof(TOKEN_PRIVILEGES), nullptr, nullptr));
-
-		if (GetLastError() == ERROR_NOT_ALL_ASSIGNED)
-		{
-			return false;
-		}
-
-		return true;
+		m_appController->terminateProcess(pid);
 	}
 
 }
