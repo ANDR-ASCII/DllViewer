@@ -23,10 +23,7 @@ namespace DllViewerApp
 		setHorizontalHeaderLabels(headerLabels);
 		update(m_pid);
 
-		Common::verifySignalSlotConnection(
-			connect(m_timer.get(), SIGNAL(timeout()), this, SLOT(timedUpdater())),
-			WHERE_CRASH_INFO
-		);
+		VERIFY(connect(m_timer, SIGNAL(timeout()), this, SLOT(slot_TimedUpdater())));
 
 		m_timer->start(300);
 	}
@@ -64,11 +61,19 @@ namespace DllViewerApp
 	{
 		HANDLE hSnapshot = ::CreateToolhelp32Snapshot(TH32CS_SNAPMODULE, pid);
 
-		check(hSnapshot != INVALID_HANDLE_VALUE,
-			"You don't have permissions for open this process");
+		if (hSnapshot == INVALID_HANDLE_VALUE)
+		{
+			if (GetLastError() == ERROR_ACCESS_DENIED)
+			{
+				emit signal_OnError("Error access denied");
+			}
+			else
+			{
+				emit signal_OnError("You don't have permissions for open this process");
+			}
 
-		check(GetLastError() != ERROR_ACCESS_DENIED, 
-			"Error access denied");
+			return;
+		}
 
 		m_pid = pid;
 
@@ -77,8 +82,10 @@ namespace DllViewerApp
 		MODULEENTRY32W meEntry32;
 		meEntry32.dwSize = sizeof(meEntry32);
 
-		check(::Module32First(hSnapshot, &meEntry32) != FALSE,
-			"Cannot retrieve information about some module");
+		if (::Module32First(hSnapshot, &meEntry32) == FALSE)
+		{
+			emit signal_OnError("Cannot retrieve information about some module");
+		}
 
 		do
 		{
@@ -89,7 +96,7 @@ namespace DllViewerApp
 		::CloseHandle(hSnapshot);
 	}
 
-	void ModuleSnapshotModel::timedUpdater()
+	void ModuleSnapshotModel::slot_TimedUpdater()
 	{
 		update(m_pid);
 	}

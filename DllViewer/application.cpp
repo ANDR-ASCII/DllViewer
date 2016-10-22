@@ -1,3 +1,4 @@
+#include "afx.h"
 #include "stdafx.h"
 #include "application.hpp"
 #include "common/common.hpp"
@@ -25,10 +26,7 @@ namespace DllViewerApp
 		{
 			m_mainFrame.reset(new DllViewer);
 			
-			verifySignalSlotConnection(
-				connect(m_mainFrame.get(), SIGNAL(signal_TerminateButtonClicked(DWORD)), this, SLOT(slot_TerminateProcess(DWORD))),
-				WHERE_CRASH_INFO
-			);
+			VERIFY(connect(m_mainFrame.get(), SIGNAL(signal_TerminateButtonClicked(DWORD)), this, SLOT(slot_TerminateProcess(DWORD))));
 
 			m_mainFrame->show();
 

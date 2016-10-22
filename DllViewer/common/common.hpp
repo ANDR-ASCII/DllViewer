@@ -10,12 +10,14 @@
 #define CPP_11_MACRO_VALUE 201103L
 #define CPP_14_MACRO_VALUE 201402L
 
-#define WHERE_CRASH_INFO \
-	__LINE__, std::string{ __FUNCTION__ }
+#ifndef NDEBUG
+#define VERIFY(F) assert(F)
+#else
+#define VERIFY(F) F
+#endif
 
 namespace Common
 {
-	void verifySignalSlotConnection(QMetaObject::Connection connectionObject, int lineNumber, std::string const& fromCall = "");
 	bool isOnlyDigits(QString const& str);
 	void showMessageBox(QString const& title, QString const& text);
 }

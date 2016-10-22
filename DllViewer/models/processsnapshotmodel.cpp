@@ -6,8 +6,8 @@ namespace DllViewerApp
 {
 
 	ProcessSnapshotModel::ProcessSnapshotModel(QObject * parent)
-		: AbstractSnapshotModel{ parent }
-		, m_timer{ new QTimer{ this } }
+		: AbstractSnapshotModel(parent)
+		, m_timer(new QTimer(this))
 	{
 		QStringList headerLabels;
 
@@ -21,10 +21,7 @@ namespace DllViewerApp
 		setHorizontalHeaderLabels(headerLabels);
 		update();
 
-		Common::verifySignalSlotConnection(
-			connect(m_timer, SIGNAL(timeout()), this, SLOT(timedUpdater())),
-			WHERE_CRASH_INFO
-		);
+		VERIFY(connect(m_timer, SIGNAL(timeout()), this, SLOT(slot_TimedUpdater())));
 
 		m_timer->start(300);
 	}
@@ -81,14 +78,20 @@ namespace DllViewerApp
 
 		HANDLE hSnapshot = ::CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
 
-		check(hSnapshot != INVALID_HANDLE_VALUE,
-			"Cannot create a processes snapshot");
+		if (hSnapshot == INVALID_HANDLE_VALUE)
+		{
+			emit signal_OnError("Cannot create a processes snapshot");
+
+			return;
+		}
 
 		PROCESSENTRY32W peEntry32;
 		peEntry32.dwSize = sizeof(peEntry32);
 
-		check(::Process32First(hSnapshot, &peEntry32) != FALSE,
-			"Cannot retrieve information about some process");
+		if (::Process32First(hSnapshot, &peEntry32) == FALSE)
+		{
+			emit signal_OnError("Cannot retrieve information about some process");
+		}
 
 		do
 		{
@@ -104,7 +107,7 @@ namespace DllViewerApp
 		::CloseHandle(hSnapshot);
 	}
 
-	void ProcessSnapshotModel::timedUpdater()
+	void ProcessSnapshotModel::slot_TimedUpdater()
 	{
 		update();
 	}

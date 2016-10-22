@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "dllviewer.h"
+#include "common/common.hpp"
 #include "common/servicelocator.hpp"
 
 namespace DllViewerApp
@@ -11,15 +12,9 @@ namespace DllViewerApp
 	{
 		ui.setupUi(this);
 
-		Common::verifySignalSlotConnection(
-			connect(ui.searchLineEdit, SIGNAL(returnPressed()), this, SLOT(slot_SearchLineEditRetPressed())),
-			WHERE_CRASH_INFO
-		);
-
-		Common::verifySignalSlotConnection(
-			connect(ui.terminateButton, SIGNAL(clicked()), this, SLOT(slot_TerminateButtonClicked())),
-			WHERE_CRASH_INFO
-		);
+		VERIFY(connect(ui.searchLineEdit, SIGNAL(returnPressed()), this, SLOT(slot_SearchLineEditRetPressed())));
+		VERIFY(connect(ui.terminateButton, SIGNAL(clicked()), this, SLOT(slot_TerminateButtonClicked())));
+		VERIFY(connect(m_processSnapModel, SIGNAL(signal_OnError(QString)), this, SLOT(slot_ShowErrorMessageBox(QString))));
 
 		ui.processView->setAlternatingRowColors(true);
 		ui.processView->setModel(m_processSnapModel);
@@ -115,6 +110,11 @@ namespace DllViewerApp
 
 			emit signal_TerminateButtonClicked((DWORD)pid.toInt());
 		}
+	}
+
+	void DllViewer::slot_ShowErrorMessageBox(QString text)
+	{
+		Common::showMessageBox("Error", text);
 	}
 
 }

@@ -58,8 +58,11 @@ namespace DllViewerApp
 		// updates the containing snapshot
 		virtual void update(DWORD pid = 0) override;
 
+	signals:
+		void signal_OnError(QString str);
+
 	private slots:
-		void timedUpdater();
+		void slot_TimedUpdater();
 
 	private:
 
@@ -72,7 +75,7 @@ namespace DllViewerApp
 
 	private:
 		std::vector<ModuleInfo> m_storage;
-		std::shared_ptr<QTimer> m_timer;
+		QTimer* m_timer;
 		DWORD m_pid;
 	};
 

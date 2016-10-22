@@ -20,6 +20,7 @@ namespace DllViewerApp
 	private slots:
 		void slot_SearchLineEditRetPressed();
 		void slot_TerminateButtonClicked();
+		void slot_ShowErrorMessageBox(QString text);
 
 	private:
 		Ui::DllViewerClass ui;

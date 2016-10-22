@@ -77,15 +77,6 @@ protected:
 		return m_VecticalHeaderData.size();
 	}
 
-	// throwing an exception if "condition" evaluates as false
-	void check(bool condition, char const* errorMessage) const
-	{
-		if (!condition)
-		{
-			throw SnapshotException{ errorMessage };
-		}
-	}
-
 private:
 	QStringList m_HorizontalHeaderData;
 	QStringList m_VecticalHeaderData;
