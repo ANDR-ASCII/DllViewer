@@ -30,17 +30,14 @@ namespace DllViewerApp
 	void ApplicationController::setSeDebugName(bool flag)
 	{
 		HANDLE hThisProcess = ::OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION, FALSE, ::GetCurrentProcessId());
-		assert(hThisProcess != nullptr);
 
 		HANDLE hThisProcessToken = 0;
 		::OpenProcessToken(hThisProcess, TOKEN_ADJUST_PRIVILEGES, &hThisProcessToken);
-		assert(hThisProcess != 0);
 
 		TOKEN_PRIVILEGES tp;
 		LUID luid;
 
 		BOOL bLookupResult = ::LookupPrivilegeValue(nullptr, SE_DEBUG_NAME, &luid);
-		assert(bLookupResult);
 
 		if (!bLookupResult)
 		{
@@ -55,7 +52,6 @@ namespace DllViewerApp
 		tp.Privileges[0].Attributes = enableStatus;
 
 		BOOL bAdjustResult = ::AdjustTokenPrivileges(hThisProcessToken, FALSE, &tp, sizeof(TOKEN_PRIVILEGES), nullptr, nullptr);
-		assert(bAdjustResult);
 
 		if (!bAdjustResult || GetLastError() == ERROR_NOT_ALL_ASSIGNED)
 		{
