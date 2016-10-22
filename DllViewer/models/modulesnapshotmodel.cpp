@@ -1,5 +1,6 @@
-﻿#include <stdafx.h>
+﻿#include "stdafx.h"
 #include "modulesnapshotmodel.hpp"
+#include "common/stringfeatures.hpp"
 #include <cwchar>
 #include <tchar.h>
 
@@ -98,16 +99,16 @@ namespace DllViewerApp
 		switch (index.column())
 		{
 		case FieldType::Name:
-			return Common::wcharToQString(m_storage[index.row()].moduleName.c_str());
+			return Common::StringFeatures::wcharToQString(m_storage[index.row()].moduleName.c_str());
 
 		case FieldType::Path:
-			return Common::wcharToQString(m_storage[index.row()].path.c_str());
+			return Common::StringFeatures::wcharToQString(m_storage[index.row()].path.c_str());
 
 		case FieldType::ModuleBaseAddress:
 		{
 			wchar_t addressString[256];
 			std::swprintf(addressString, L"%p", m_storage[index.row()].moduleBaseAddress);
-			return Common::wcharToQString(addressString);
+			return Common::StringFeatures::wcharToQString(addressString);
 		}
 
 		case FieldType::ModuleBaseSize:

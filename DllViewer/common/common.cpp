@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "common.hpp"
 #include <memory>
+#include <cstring>
 #include <windows.h>
 
 namespace Common

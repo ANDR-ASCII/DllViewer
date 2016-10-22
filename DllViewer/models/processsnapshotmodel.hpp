@@ -30,13 +30,13 @@ namespace DllViewerApp
 	public:
 		enum SearchType
 		{
-			ByPID
+			  ByPID
 			, ByName
 		};
 
 		enum FieldType
 		{
-			Name
+			  Name
 			, PID
 			, ParentPID
 			, CountThreads

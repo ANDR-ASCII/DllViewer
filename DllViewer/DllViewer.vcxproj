@@ -279,6 +279,7 @@
     <ClInclude Include="Common\abstractfactory.hpp" />
     <ClInclude Include="Common\common.hpp" />
     <ClInclude Include="Common\servicelocator.hpp" />
+    <ClInclude Include="common\stringfeatures.hpp" />
     <ClInclude Include="GeneratedFiles\ui_dllviewer.h" />
     <CustomBuild Include="dllviewer.h">
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>

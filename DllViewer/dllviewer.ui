@@ -75,8 +75,37 @@
      <height>21</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuActions">
+    <property name="title">
+     <string>Actions</string>
+    </property>
+    <addaction name="actionTerminate_process"/>
+    <addaction name="actionStart_new_process"/>
+   </widget>
+   <addaction name="menuActions"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
+  <action name="actionTerminate_process">
+   <property name="icon">
+    <iconset>
+     <normaloff>icons/Delete-icon.png</normaloff>icons/Delete-icon.png</iconset>
+   </property>
+   <property name="text">
+    <string>Terminate process</string>
+   </property>
+   <property name="toolTip">
+    <string>CTRL + T</string>
+   </property>
+  </action>
+  <action name="actionStart_new_process">
+   <property name="icon">
+    <iconset>
+     <normaloff>icons/new-icon.png</normaloff>icons/new-icon.png</iconset>
+   </property>
+   <property name="text">
+    <string>Start new process</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>

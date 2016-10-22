@@ -15,7 +15,7 @@ namespace DllViewerApp
 		DllViewer(QWidget *parent = 0);
 
 	signals:
-		void signal_TerminateButtonClicked();
+		void signal_TerminateButtonClicked(DWORD);
 		void signal_StartProcessButtonClicked();
 
 	private slots:

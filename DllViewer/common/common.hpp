@@ -15,8 +15,6 @@
 
 namespace Common
 {
-	std::string wcharToString(wchar_t const* wideString);
-	QString wcharToQString(wchar_t const* wideString);
 	void verifySignalSlotConnection(QMetaObject::Connection connectionObject, int lineNumber, std::string const& fromCall = "");
 	bool isOnlyDigits(QString const& str);
 	void showMessageBox(QString const& title, QString const& text);

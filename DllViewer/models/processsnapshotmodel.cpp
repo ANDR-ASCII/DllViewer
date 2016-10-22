@@ -1,5 +1,6 @@
-﻿#include <stdafx.h>
+﻿#include "stdafx.h"
 #include "processsnapshotmodel.hpp"
+#include "common/stringfeatures.hpp"
 
 namespace DllViewerApp
 {
@@ -127,9 +128,11 @@ namespace DllViewerApp
 	{
 		typedef std::vector<ProcessInfo>::size_type size_type;
 
+		std::wstring comparableString = Common::StringFeatures::toLower(str.toStdWString());
+
 		for (size_type i = 0, sz = m_storage.size(); i < sz; ++i)
 		{
-			if (m_storage[i].processName == str.toStdWString())
+			if (Common::StringFeatures::toLower(m_storage[i].processName) == comparableString)
 			{
 				return QAbstractTableModel::createIndex(static_cast<int>(i), 0, this);
 			}
@@ -155,7 +158,7 @@ namespace DllViewerApp
 		switch (index.column())
 		{
 		case FieldType::Name:
-			return Common::wcharToQString(m_storage[index.row()].processName.c_str());
+			return Common::StringFeatures::wcharToQString(m_storage[index.row()].processName.c_str());
 
 		case FieldType::PID:
 			return static_cast<int>(m_storage[index.row()].processID);

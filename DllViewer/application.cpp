@@ -25,7 +25,7 @@ namespace DllViewerApp
 			m_mainFrame.reset(new DllViewer);
 			
 			verifySignalSlotConnection(
-				connect(m_mainFrame.get(), SIGNAL(terminateButtonClicked()), this, SLOT(slot_TerminateProcess())),
+				connect(m_mainFrame.get(), SIGNAL(signal_TerminateButtonClicked(DWORD)), this, SLOT(slot_TerminateProcess(DWORD))),
 				WHERE_CRASH_INFO
 			);
 

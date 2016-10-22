@@ -109,6 +109,9 @@
     <ClInclude Include="Common\common.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="common\stringfeatures.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="dllviewer.h">
