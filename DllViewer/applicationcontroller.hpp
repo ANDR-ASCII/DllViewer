@@ -1,17 +1,16 @@
 #pragma once
 
-#include "applicationbaseexceptions.hpp"
+#include <QObject>
 #include <windows.h>
 
 namespace DllViewerApp
 {
-	class ApplicationControllerException : public AppExceptions::ApplicationRunTimeException
-	{};
-
-	class ApplicationController
+	class ApplicationController : public QObject
 	{
+		Q_OBJECT
+
 	public:
-		ApplicationController();
+		ApplicationController(QObject* parent = nullptr);
 
 		void setSeDebugName(bool flag);
 		bool seDebugName() const;

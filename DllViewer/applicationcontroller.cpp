@@ -1,14 +1,14 @@
 #include "stdafx.h"
 #include "common/common.hpp"
 #include "applicationcontroller.hpp"
-#include "applicationbaseexceptions.hpp"
 #include <cassert>
 
 namespace DllViewerApp
 {
 
-	ApplicationController::ApplicationController()
-		: m_seDebugName(false)
+	ApplicationController::ApplicationController(QObject* parent)
+		: QObject(parent)
+		, m_seDebugName(false)
 	{}
 
 	bool ApplicationController::seDebugName() const
@@ -20,9 +20,9 @@ namespace DllViewerApp
 	{
 		HANDLE hTerminatingProcess = ::OpenProcess(PROCESS_TERMINATE, FALSE, pid);
 
-		if (hTerminatingProcess == NULL)
+		if(hTerminatingProcess == INVALID_HANDLE_VALUE)
 		{
-			throw AppExceptions::ApplicationRunTimeException("Cannot open the specified process. Error Access denied.");
+			return;
 		}
 
 		::TerminateProcess(hTerminatingProcess, 0);

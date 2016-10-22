@@ -3,7 +3,6 @@
 #include "application.hpp"
 #include "common/common.hpp"
 #include "common/servicelocator.hpp"
-#include "applicationbaseexceptions.hpp"
 #include <cassert>
 #include <QObject>
 
@@ -12,8 +11,8 @@ namespace DllViewerApp
 	using namespace Common;
 
 	Application::Application(int argc, char *argv[])
-		: m_app{ argc, argv }
-		, m_appController(new ApplicationController)
+		: m_app(argc, argv)
+		, m_appController(new ApplicationController(this))
 	{
 		m_appController->setSeDebugName(true);
 
@@ -22,20 +21,12 @@ namespace DllViewerApp
 			showMessageBox("Advice", "This program should be started behalf administrator");
 		}
 
-		try
-		{
-			m_mainFrame.reset(new DllViewer);
-			
-			VERIFY(connect(m_mainFrame.get(), SIGNAL(signal_TerminateButtonClicked(DWORD)), this, SLOT(slot_TerminateProcess(DWORD))));
+		m_mainFrame.reset(new DllViewer);
 
-			m_mainFrame->show();
+		VERIFY(connect(m_mainFrame.get(), SIGNAL(signal_TerminateButtonClicked(DWORD)), this, SLOT(slot_TerminateProcess(DWORD))));
 
-			m_app.exec();
-		}
-		catch (AppExceptions::ApplicationRunTimeException const& e)
-		{
-			Common::showMessageBox("Exception", e.what());
-		}
+		m_mainFrame->show();
+		m_app.exec();
 	}
 
 	void Application::slot_TerminateProcess(DWORD pid)
