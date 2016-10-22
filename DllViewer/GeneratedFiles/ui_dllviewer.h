@@ -57,6 +57,8 @@ public:
         QIcon icon;
         icon.addFile(QStringLiteral("../../../visual-studio-2015-projects/ModuleViewer/ModuleViewer/icons/dll-icon.png"), QSize(), QIcon::Normal, QIcon::Off);
         DllViewerClass->setWindowIcon(icon);
+        DllViewerClass->setStyleSheet(QLatin1String("font: 10pt \"Courier New\";\n"
+""));
         actionTerminate_process = new QAction(DllViewerClass);
         actionTerminate_process->setObjectName(QStringLiteral("actionTerminate_process"));
         QIcon icon1;
@@ -98,6 +100,8 @@ public:
         splitter->setOrientation(Qt::Horizontal);
         processView = new QTreeView(splitter);
         processView->setObjectName(QStringLiteral("processView"));
+        processView->setStyleSheet(QStringLiteral(""));
+        processView->setAnimated(true);
         splitter->addWidget(processView);
         dllsView = new QTreeView(splitter);
         dllsView->setObjectName(QStringLiteral("dllsView"));
@@ -123,7 +127,7 @@ public:
         DllViewerClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(DllViewerClass);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 1013, 21));
+        menuBar->setGeometry(QRect(0, 0, 1013, 22));
         DllViewerClass->setMenuBar(menuBar);
         statusBar = new QStatusBar(DllViewerClass);
         statusBar->setObjectName(QStringLiteral("statusBar"));

@@ -17,6 +17,10 @@
    <iconset>
     <normaloff>../../../visual-studio-2015-projects/ModuleViewer/ModuleViewer/icons/dll-icon.png</normaloff>../../../visual-studio-2015-projects/ModuleViewer/ModuleViewer/icons/dll-icon.png</iconset>
   </property>
+  <property name="styleSheet">
+   <string notr="true">font: 10pt &quot;Courier New&quot;;
+</string>
+  </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
@@ -51,7 +55,14 @@
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
       </property>
-      <widget class="QTreeView" name="processView"/>
+      <widget class="QTreeView" name="processView">
+       <property name="styleSheet">
+        <string notr="true"/>
+       </property>
+       <property name="animated">
+        <bool>true</bool>
+       </property>
+      </widget>
       <widget class="QTreeView" name="dllsView"/>
      </widget>
     </item>
@@ -87,7 +98,7 @@
      <x>0</x>
      <y>0</y>
      <width>1013</width>
-     <height>21</height>
+     <height>22</height>
     </rect>
    </property>
   </widget>

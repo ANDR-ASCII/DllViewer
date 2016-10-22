@@ -39,7 +39,14 @@ namespace DllViewerApp
 
 	Application::~Application()
 	{
-		m_app.exec();
+		try
+		{
+			m_app.exec();
+		}
+		catch (std::exception const& e)
+		{
+			Common::showMessageBox("Exception", e.what());
+		}
 	}
 
 	void Application::slot_TerminateProcess(DWORD pid)

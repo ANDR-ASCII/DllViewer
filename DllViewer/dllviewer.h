@@ -16,7 +16,6 @@ namespace DllViewerApp
 
 	signals:
 		void signal_TerminateButtonClicked(DWORD);
-		void signal_StartProcessButtonClicked();
 
 	private slots:
 		void slot_SearchLineEditRetPressed();
