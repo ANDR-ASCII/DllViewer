@@ -38,8 +38,8 @@ namespace Common
 		template<typename T>
 		static T toLower(T const& str)
 		{
-			ReturnTypeTraits<T>::return_type result = str;
-			ReturnTypeTraits<T>::ToLower transformFunction;
+			T result = str;
+			ToLower<T> transformFunction;
 
 			transformFunction(result);
 
@@ -49,48 +49,33 @@ namespace Common
 	private:
 
 		template<typename T>
-		struct ReturnTypeTraits;
+		struct ToLower;
 
 		template<>
-		struct ReturnTypeTraits<std::string>
+		struct ToLower<std::string>
 		{
-			using return_type = std::string;
-
-			struct ToLower
+			void operator()(std::string& str) const
 			{
-				void operator()(std::string& str) const
-				{
-					std::transform(str.begin(), str.end(), str.begin(), [](char& ch) {return std::tolower(ch); });
-				}
-			};
+				std::transform(str.begin(), str.end(), str.begin(), [](char& ch) {return std::tolower(ch); });
+			}
 		};
 
 		template<>
-		struct ReturnTypeTraits<std::wstring>
+		struct ToLower<std::wstring>
 		{
-			using return_type = std::wstring;
-			
-			struct ToLower
+			void operator()(std::wstring& str) const
 			{
-				void operator()(std::wstring& str) const
-				{
-					std::transform(str.begin(), str.end(), str.begin(), [](wchar_t& ch) {return std::towlower(ch); });
-				}
-			};
+				std::transform(str.begin(), str.end(), str.begin(), [](wchar_t& ch) {return std::towlower(ch); });
+			}
 		};
 
 		template<>
-		struct ReturnTypeTraits<QString>
+		struct ToLower<QString>
 		{
-			using return_type = QString;
-			
-			struct ToLower
+			void operator()(QString& str) const
 			{
-				void operator()(QString& str) const
-				{
-					str.toLower();
-				}
-			};
+				str.toLower();
+			}
 		};
 
 	};

@@ -39,7 +39,13 @@ namespace DllViewerApp
 		TOKEN_PRIVILEGES tp;
 		LUID luid;
 
-		assert(::LookupPrivilegeValue(nullptr, SE_DEBUG_NAME, &luid));
+		BOOL bResult = ::LookupPrivilegeValue(nullptr, SE_DEBUG_NAME, &luid);
+		assert(bResult);
+
+		if (!bResult)
+		{
+			return;
+		}
 
 		tp.PrivilegeCount = 1;
 		tp.Privileges[0].Luid = luid;
