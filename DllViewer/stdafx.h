@@ -1,1 +1,3 @@
+#define _CRT_NON_CONFORMING_SWPRINTFS
+#define _CRT_SECURE_NO_WARNINGS
 #include <QtWidgets>

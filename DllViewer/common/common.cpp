@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "common.hpp"
-#include "applicationbaseexceptions.hpp"
 #include <memory>
 #include <cstring>
 #include <windows.h>

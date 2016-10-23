@@ -45,7 +45,7 @@ namespace DllViewerApp
 	{
 		Q_UNUSED(parent);
 
-		return (int)m_storage.size();
+		return static_cast<int>(m_storage.size());
 	}
 
 	int ProcessSnapshotModel::columnCount(const QModelIndex & parent) const
@@ -65,6 +65,11 @@ namespace DllViewerApp
 		if (role == Qt::DisplayRole)
 		{
 			return getValue(index);
+		}
+
+		if (role == Qt::DecorationRole && index.column() == FieldType::Name)
+		{
+			return QIcon("icons/process-accept-icon.png");
 		}
 
 		return QVariant{};
@@ -124,7 +129,7 @@ namespace DllViewerApp
 			}
 		}
 
-		return QModelIndex{};
+		return QModelIndex();
 	}
 
 	QModelIndex ProcessSnapshotModel::searchByName(QString const& str)
@@ -141,7 +146,7 @@ namespace DllViewerApp
 			}
 		}
 
-		return QModelIndex{};
+		return QModelIndex();
 	}
 
 	bool ProcessSnapshotModel::existsItemOf(QModelIndex const& index) const

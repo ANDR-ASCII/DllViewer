@@ -32,7 +32,7 @@ namespace DllViewerApp
 	{
 		Q_UNUSED(parent);
 
-		return (int)m_storage.size();
+		return static_cast<int>(m_storage.size());
 	}
 
 	int ModuleSnapshotModel::columnCount(const QModelIndex& parent) const
@@ -52,6 +52,11 @@ namespace DllViewerApp
 		if (role == Qt::DisplayRole)
 		{
 			return getValue(index);
+		}
+
+		if (role == Qt::DecorationRole && index.column() == FieldType::Name)
+		{
+			return QIcon("icons/File-Types-dll-icon.png");
 		}
 
 		return QVariant{};

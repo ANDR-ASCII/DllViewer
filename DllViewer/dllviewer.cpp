@@ -63,7 +63,7 @@ namespace DllViewerApp
 			return;
 		}
 
-		DWORD pid = (DWORD)m_processSnapModel->getValue(index.row(), ProcessSnapshotModel::PID).toInt();
+		DWORD pid = static_cast<DWORD>(m_processSnapModel->getValue(index.row(), ProcessSnapshotModel::PID).toInt());
 		
 		QItemSelectionModel* selectionModel = ui.processView->selectionModel();
 
