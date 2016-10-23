@@ -20,7 +20,6 @@ namespace DllViewerApp
 
 	private:
 		QApplication m_app;
-		std::unique_ptr<ApplicationController> m_appController;
 		std::unique_ptr<DllViewer> m_mainFrame;
 	};
 }
