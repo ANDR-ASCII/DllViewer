@@ -49,6 +49,16 @@ namespace Common
 			m_services.erase(findIterator);
 		}
 
+		template<typename ServiceType>
+		ServiceType* service() const
+		{
+			auto findIterator = m_services.find(typeid(ServiceType).name());
+
+			assert(findIterator != m_services.end());
+
+			return static_cast<ServiceType*>(std::get<0>(std::get<1>(*findIterator)));
+		}
+
 	private:
 		ServiceLocator() = default;
 		ServiceLocator(ServiceLocator const&&) = delete;

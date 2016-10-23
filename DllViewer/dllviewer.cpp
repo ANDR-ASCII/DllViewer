@@ -5,7 +5,7 @@
 
 namespace DllViewerApp
 {
-	DllViewer::DllViewer(QWidget *parent)
+	DllViewer::DllViewer(QWidget *parent, bool seDebugPrivilegeEnabled)
 		: QMainWindow(parent)
 		, m_processSnapModel(new ProcessSnapshotModel)
 		, m_moduleSnapModel(new ModuleSnapshotModel)
@@ -21,6 +21,13 @@ namespace DllViewerApp
 
 		ui.dllsView->setAlternatingRowColors(true);
 		ui.dllsView->setModel(m_moduleSnapModel);
+
+		if (!seDebugPrivilegeEnabled)
+		{
+			ui.adviceLabel->setText(
+				"<font color='red'>If you start this program behalf administrator "
+				"then you will have access to more processes.</font>");
+		}
 	}
 
 	void DllViewer::slot_SearchLineEditRetPressed()

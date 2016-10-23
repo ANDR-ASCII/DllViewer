@@ -12,8 +12,8 @@ namespace DllViewerApp
 	public:
 		ApplicationController(QObject* parent = nullptr);
 
-		void setSeDebugName(bool flag);
-		bool seDebugName() const;
+		void setSeDebugPrivilege(bool flag);
+		bool seDebugPrivilege() const;
 
 		void terminateProcess(DWORD pid) const;
 

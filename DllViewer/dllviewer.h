@@ -12,7 +12,7 @@ namespace DllViewerApp
 		Q_OBJECT
 
 	public:
-		DllViewer(QWidget *parent = 0);
+		DllViewer(QWidget *parent = 0, bool seDebugPrivilegeEnabled = false);
 
 	signals:
 		void signal_TerminateButtonClicked(DWORD);

@@ -12,16 +12,15 @@ namespace DllViewerApp
 
 	Application::Application(int argc, char *argv[])
 		: m_app(argc, argv)
-		, m_appController(new ApplicationController(this))
 	{
-		m_appController->setSeDebugName(true);
+		ServiceLocator* serviceLocator = ServiceLocator::instance();
+		serviceLocator->addService<ApplicationController>(new ApplicationController);
 
-		if (m_appController->seDebugName() == false)
-		{
-			showMessageBox("Advice", "This program should be started behalf administrator");
-		}
+		ApplicationController* appController = serviceLocator->service<ApplicationController>();
 
-		m_mainFrame.reset(new DllViewer);
+		appController->setSeDebugPrivilege(true);
+
+		m_mainFrame.reset(new DllViewer(nullptr, appController->seDebugPrivilege()));
 
 		VERIFY(connect(m_mainFrame.get(), SIGNAL(signal_TerminateButtonClicked(DWORD)), this, SLOT(slot_TerminateProcess(DWORD))));
 
@@ -31,7 +30,10 @@ namespace DllViewerApp
 
 	void Application::slot_TerminateProcess(DWORD pid)
 	{
-		m_appController->terminateProcess(pid);
+		ServiceLocator* serviceLocator = ServiceLocator::instance();
+		ApplicationController* appController = serviceLocator->service<ApplicationController>();
+
+		appController->terminateProcess(pid);
 	}
 
 }

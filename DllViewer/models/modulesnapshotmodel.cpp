@@ -46,7 +46,7 @@ namespace DllViewerApp
 	{
 		if (!index.isValid() || !existsItemOf(index))
 		{
-			return QVariant{};
+			return QVariant();
 		}
 
 		if (role == Qt::DisplayRole)
@@ -56,10 +56,10 @@ namespace DllViewerApp
 
 		if (role == Qt::DecorationRole && index.column() == FieldType::Name)
 		{
-			return QIcon("icons/File-Types-dll-icon.png");
+			return QIcon("icons/Aroche-Delta-File-DLL.ico");
 		}
 
-		return QVariant{};
+		return QVariant();
 	}
 
 	void ModuleSnapshotModel::update(DWORD pid)

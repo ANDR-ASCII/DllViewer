@@ -11,7 +11,7 @@ namespace DllViewerApp
 		, m_seDebugName(false)
 	{}
 
-	bool ApplicationController::seDebugName() const
+	bool ApplicationController::seDebugPrivilege() const
 	{
 		return m_seDebugName;
 	}
@@ -28,7 +28,7 @@ namespace DllViewerApp
 		::TerminateProcess(hTerminatingProcess, 0);
 	}
 
-	void ApplicationController::setSeDebugName(bool flag)
+	void ApplicationController::setSeDebugPrivilege(bool flag)
 	{
 		HANDLE hThisProcess = ::OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION, FALSE, ::GetCurrentProcessId());
 

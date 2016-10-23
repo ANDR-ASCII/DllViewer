@@ -44,6 +44,7 @@ public:
     QTreeView *processView;
     QTreeView *dllsView;
     QHBoxLayout *horizontalLayout;
+    QLabel *adviceLabel;
     QSpacerItem *horizontalSpacer;
     QPushButton *terminateButton;
     QMenuBar *menuBar;
@@ -112,6 +113,11 @@ public:
         horizontalLayout = new QHBoxLayout();
         horizontalLayout->setSpacing(6);
         horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
+        adviceLabel = new QLabel(centralWidget);
+        adviceLabel->setObjectName(QStringLiteral("adviceLabel"));
+
+        horizontalLayout->addWidget(adviceLabel);
+
         horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
         horizontalLayout->addItem(horizontalSpacer);
@@ -147,6 +153,7 @@ public:
 #endif // QT_NO_TOOLTIP
         actionStart_new_process->setText(QApplication::translate("DllViewerClass", "Start new process", 0));
         label->setText(QApplication::translate("DllViewerClass", "Type in pid or process name for search:", 0));
+        adviceLabel->setText(QString());
         terminateButton->setText(QApplication::translate("DllViewerClass", "Terminate selected process", 0));
     } // retranslateUi
 
