@@ -1,4 +1,3 @@
-#include "afx.h"
 #include "stdafx.h"
 #include "application.hpp"
 #include "common/common.hpp"

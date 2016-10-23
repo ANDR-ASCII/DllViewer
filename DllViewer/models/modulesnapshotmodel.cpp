@@ -56,7 +56,8 @@ namespace DllViewerApp
 
 		if (role == Qt::DecorationRole && index.column() == FieldType::Name)
 		{
-			return QIcon("icons/Aroche-Delta-File-DLL.ico");
+			static QIcon icon("icons/Aroche-Delta-File-DLL.ico");
+			return icon;
 		}
 
 		return QVariant();

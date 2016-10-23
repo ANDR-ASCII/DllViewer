@@ -14,10 +14,11 @@ namespace DllViewerApp
 	public:
 		DllViewer(QWidget *parent = 0, bool seDebugPrivilegeEnabled = false);
 
-	signals:
+	Q_SIGNALS:
 		void signal_TerminateButtonClicked(DWORD);
 
-	private slots:
+	private Q_SLOTS:
+		void slot_ProcessViewSelectionChanged(QItemSelection const& selected, QItemSelection const& deselected);
 		void slot_SearchLineEditRetPressed();
 		void slot_TerminateButtonClicked();
 		void slot_ShowErrorMessageBox(QString text);

@@ -2,6 +2,7 @@
 #include "common/common.hpp"
 #include "applicationcontroller.hpp"
 #include <cassert>
+#include <winbase.h>
 
 namespace DllViewerApp
 {

@@ -69,7 +69,8 @@ namespace DllViewerApp
 
 		if (role == Qt::DecorationRole && index.column() == FieldType::Name)
 		{
-			return QIcon("icons/process-accept-icon.png");
+			static QIcon icon("icons/process-accept-icon.png");
+			return icon;
 		}
 
 		return QVariant{};

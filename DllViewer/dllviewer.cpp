@@ -12,9 +12,12 @@ namespace DllViewerApp
 	{
 		ui.setupUi(this);
 
+		QItemSelectionModel* selectionModel = ui.processView->selectionModel();
+
 		VERIFY(connect(ui.searchLineEdit, SIGNAL(returnPressed()), this, SLOT(slot_SearchLineEditRetPressed())));
 		VERIFY(connect(ui.terminateButton, SIGNAL(clicked()), this, SLOT(slot_TerminateButtonClicked())));
 		VERIFY(connect(m_processSnapModel, SIGNAL(signal_OnError(QString)), this, SLOT(slot_ShowErrorMessageBox(QString))));
+/*		VERIFY(connect(selectionModel, &QItemSelectionModel::selectionChanged, this, &DllViewer::slot_ProcessViewSelectionChanged));*/
 
 		ui.processView->setAlternatingRowColors(true);
 		ui.processView->setModel(m_processSnapModel);
@@ -28,6 +31,33 @@ namespace DllViewerApp
 				"<font color='red'>If you start this program behalf administrator "
 				"then you will have access to more processes.</font>");
 		}
+	}
+
+	void DllViewer::slot_ProcessViewSelectionChanged(QItemSelection const& selected, QItemSelection const& deselected)
+	{
+		Q_UNUSED(deselected);
+		QModelIndexList modelIndexes = selected.indexes();
+
+		auto selectedOnlyOneRow = [&modelIndexes]
+		{
+			int row = modelIndexes.back().row();
+			for (auto beg = modelIndexes.begin(), end = modelIndexes.end() - 1; beg != end; ++beg)
+			{
+				if (beg->row() != row)
+				{
+					return false;
+				}
+			}
+
+			return true;
+		};
+
+		assert(selectedOnlyOneRow());
+
+		QModelIndex index = modelIndexes.back();
+		DWORD pid = static_cast<DWORD>(m_processSnapModel->getValue(index.row(), ProcessSnapshotModel::PID).toInt());
+		
+		m_moduleSnapModel->update(pid);
 	}
 
 	void DllViewer::slot_SearchLineEditRetPressed()
